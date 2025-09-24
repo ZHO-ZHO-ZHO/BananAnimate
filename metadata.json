@@ -1,0 +1,5 @@
+{
+  "name": "AI Video Character Animator",
+  "description": "Edit a character image using AI and then generate a new video featuring your creation. This app combines advanced image editing with text-to-video generation to bring your characters to life.",
+  "requestFramePermissions": []
+}
