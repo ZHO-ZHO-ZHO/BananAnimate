@@ -9,7 +9,6 @@ interface GenerateVideoParams {
     animationMode: AnimationMode;
     motionVideoBase64: string;
     motionVideoMimeType: string;
-    colabUrl: string;
 }
 
 /**
@@ -27,16 +26,14 @@ export const generateVideoFromColab = async (params: GenerateVideoParams): Promi
         animationMode,
         motionVideoBase64,
         motionVideoMimeType,
-        colabUrl,
     } = params;
     
-    // Ensure the URL is not empty and looks like a valid URL
-    if (!colabUrl || !colabUrl.startsWith('http')) {
-        throw new Error("Invalid or missing Colab backend URL.");
-    }
+    // Automatically determine the backend URL from the current page's origin.
+    // This works because the Colab script now serves the frontend.
+    const backendUrl = window.location.origin;
     
     // The endpoint path as defined in the Python backend script
-    const endpoint = `${colabUrl}/generate-video`;
+    const endpoint = `${backendUrl}/generate-video`;
 
     try {
         const response = await fetch(endpoint, {

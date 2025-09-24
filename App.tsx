@@ -28,7 +28,6 @@ const App: React.FC = () => {
   const [editPrompt, setEditPrompt] = useState<string>('Make this character a space pirate, add a cool sci-fi helmet');
   const [videoPrompt, setVideoPrompt] = useState<string>('A cinematic shot of the character');
   const [animationMode, setAnimationMode] = useState<AnimationMode>('replacement');
-  const [colabUrl, setColabUrl] = useState<string>('');
 
   const [generatedVideoUrl, setGeneratedVideoUrl] = useState<string | null>(null);
   const [isLoadingVideo, setIsLoadingVideo] = useState(false);
@@ -63,8 +62,8 @@ const App: React.FC = () => {
   }
 
   const handleGenerateVideo = async () => {
-    if (!originalImage || !sourceVideo || !editPrompt || !videoPrompt || !colabUrl) {
-      setError('Please upload a character image, a motion video, provide all prompts, and set the Colab URL.');
+    if (!originalImage || !sourceVideo || !editPrompt || !videoPrompt) {
+      setError('Please upload a character image, a motion video, and provide all prompts.');
       return;
     };
 
@@ -91,7 +90,6 @@ const App: React.FC = () => {
           animationMode,
           motionVideoBase64: sourceVideoBase64Data,
           motionVideoMimeType: sourceVideoMimeType,
-          colabUrl,
       });
 
       setLoadingMessage('Video received from backend!');
@@ -115,7 +113,7 @@ const App: React.FC = () => {
     setError(null);
   };
   
-  const canGenerate = originalImage && sourceVideo && colabUrl && editPrompt && videoPrompt;
+  const canGenerate = originalImage && sourceVideo && editPrompt && videoPrompt;
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 font-sans p-4 sm:p-8">
@@ -184,19 +182,6 @@ const App: React.FC = () => {
              <Card title="Configure & Generate" step={3}>
                 <div className="flex flex-col h-full space-y-4">
                     <div>
-                      <label htmlFor="colab-url" className="block text-sm font-medium text-gray-300 mb-2">Colab Backend URL</label>
-                      <input
-                        type="text"
-                        id="colab-url"
-                        value={colabUrl}
-                        onChange={(e) => setColabUrl(e.target.value)}
-                        placeholder="Paste your ngrok URL here"
-                        className="w-full p-2 rounded-md bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-purple-500"
-                        disabled={isLoadingVideo}
-                      />
-                    </div>
-
-                    <div>
                       <label htmlFor="edit-prompt" className="block text-sm font-medium text-gray-300 mb-2">Image Edit Prompt</label>
                       <textarea
                         id="edit-prompt"
@@ -231,7 +216,7 @@ const App: React.FC = () => {
                       <button
                         onClick={handleGenerateVideo}
                         disabled={!canGenerate || isLoadingVideo}
-                        className="w-full bg-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-700 transition duration-300 disabled:bg-gray-600 disabled:cursor-not-allowed flex items-center justify-center"
+                        className="w-full bg-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-700 transition duration-300 disabled:bg-gray-600 disabled:cursor-not-allowed flex items-center justify-center mt-auto"
                       >
                       {isLoadingVideo ? <><Spinner /> Generating...</> : '🎬 Generate Video'}
                       </button>

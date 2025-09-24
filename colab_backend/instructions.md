@@ -1,7 +1,7 @@
 
 # Guide: Deploying the All-in-One Wan-Animate + Gemini Backend on Google Colab
 
-This guide walks you through setting up and running the all-in-one Python backend server on Google Colab. This server handles both image editing with Gemini and video generation with Wan-Animate.
+This guide walks you through setting up and running the all-in-one Python backend server on Google Colab. This single server handles everything: it runs the AI models and also hosts the web application, so you can use it with a single click.
 
 ## Prerequisites
 
@@ -9,7 +9,7 @@ This guide walks you through setting up and running the all-in-one Python backen
 2.  **Google AI API Key**: The backend needs this to perform image editing.
     *   Visit the [Google AI Studio](https://aistudio.google.com/app/apikey) to get your API key.
     *   Copy the key and keep it safe.
-3.  **ngrok Account**: This service exposes your Colab server to the internet so the web app can connect to it.
+3.  **ngrok Account**: This service exposes your Colab server to the internet.
     *   Go to the [ngrok dashboard](https://dashboard.ngrok.com/login) and sign up for a free account.
     *   On the left menu, find the **"Your Authtoken"** page.
     *   Copy your authtoken.
@@ -26,9 +26,9 @@ This guide walks you through setting up and running the all-in-one Python backen
 
 ### Step 2: Clone Repository and Install Dependencies
 
-In the first code cell of your notebook, paste and run the following commands. This will clone your GitHub repository (which contains all the necessary files) and install the required Python packages.
+In the first code cell of your notebook, paste and run the following commands. This will clone your GitHub repository and install the required packages.
 
-**Note:** Replace `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME.git` with the actual URL of your GitHub repo.
+**Note:** Replace `https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME.git` with the actual URL of your GitHub repo.
 
 ```bash
 # Clone your repository
@@ -42,13 +42,13 @@ In the first code cell of your notebook, paste and run the following commands. T
 
 # Download the Wan-Animate model weights (this may take several minutes)
 !pip install "huggingface_hub[cli]"
-!huggingface-cli download Wan-AI/Wan2.2-Animate-14B --local-dir ./Wan-Animate-14B-Checkpoints
+!hugging-cli download Wan-AI/Wan2.2-Animate-14B --local-dir ./Wan-Animate-14B-Checkpoints
 ```
 
 ### Step 3: Configure and Run the Backend Server
 
 1.  Click the `+ Code` button to create a new cell in your notebook.
-2.  Paste the following code into this new cell. This code will start the server.
+2.  Paste the following code into this new cell.
 
     ```python
     # IMPORTANT: Paste your credentials here
@@ -68,22 +68,20 @@ In the first code cell of your notebook, paste and run the following commands. T
     *   Replace `"YOUR_GOOGLE_AI_API_KEY"` with the API key you got from Google AI Studio.
 4.  **Run the cell** by clicking its "Play" button.
 
-### Step 4: Get and Use the Public URL
+### Step 4: Access Your All-in-One Application
 
 1.  After the script runs, the cell's output will show a message like this:
 
     ```
     ==============================================================================
-    Backend server is running!
-    Public URL: https://some-random-string.ngrok-free.app
-    Copy this URL and paste it into the 'Colab Backend URL' field in the web app.
+    Your all-in-one AI Video App is running!
+    
+    Click this Public URL to open it: https://some-random-string.ngrok-free.app
     ==============================================================================
     ```
 
-2.  **Copy the "Public URL"**. This URL is temporary and will change every time you restart the server.
-3.  Go back to the AI Video Character Animator web app.
-4.  **Paste the URL** into the "Colab Backend URL" input field.
+2.  **Simply CLICK the "Public URL"**. It will open the web application in a new browser tab, fully connected and ready to use.
 
 ### You're all set!
 
-Your web app is now connected to the powerful backend running on Colab. You can now upload your files, set your prompts, and generate videos. You can monitor the progress of the generation process in the output of the Colab cell.
+You no longer need to copy or paste any URLs. Just run the Colab notebook and click the link. You can monitor the progress of video generation in the output of the Colab cell.
